@@ -555,26 +555,35 @@ var WidgetAnnotation = (function WidgetAnnotationClosure() {
       }
     }
 
-    // parse apperance
-    var apperance = dict.get('AP');
-    if (apperance) {
-      data.apperanceNormal = apperance.get('N') || '';
-      data.apperanceOver = apperance.get('R') || data.apperanceNormal;
-      data.apperanceDown = apperance.get('D') || data.apperanceNormal;
-    }
-
     // set up buttons
     if (data.fieldType === 'Btn') {
       if (data.fieldFlags & 32768) { // radio button
+        var ap = dict.get('AP');
+        if (ap) {
+          var i = 0, n = ap.get('N') || [];
+          n.forEach(function(key, val) {
+            if (++i == 2) {
+              data.fieldValue = key;
+            }
+          });
+        }
       }
       else if (data.fieldFlags & 65536) { // push button
         var mk = dict.get('MK');
         data.buttonCaption = stringToPDFString(mk.get('CA') || '');
       }
       else {  // check box
+        var ap = dict.get('AP');
+        if (ap) {
+          var i = 0, n = ap.get('N') || [];
+          n.forEach(function(key, val) {
+            if (++i == 1) {
+              data.fieldValue = key;
+            }
+          });
+        }
       }
     }
-
   }
 
   var parent = Annotation.prototype;

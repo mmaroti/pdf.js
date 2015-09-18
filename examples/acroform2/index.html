@@ -1,0 +1,30 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <title>ACROFORM test</title>
+</head>
+<body>
+  <div id="target"></div>
+
+  <!-- In production, only one script (pdf.js) is necessary -->
+  <!-- In production, change the content of PDFJS.workerSrc below -->
+  <script src="../../src/shared/util.js"></script>
+  <script src="../../src/display/api.js"></script>
+  <script src="../../src/display/metadata.js"></script>
+  <script src="../../src/display/canvas.js"></script>
+  <script src="../../src/display/webgl.js"></script>
+  <script src="../../src/display/pattern_helper.js"></script>
+  <script src="../../src/display/font_loader.js"></script>
+  <script src="../../src/display/annotation_helper.js"></script>
+  <script src="../../src/display/svg.js"></script>
+  <script>
+    PDFJS.workerSrc = '../../src/worker_loader.js';
+  </script>
+
+  <script src="acroform.js"></script>
+  <script type="text/javascript">
+	PDFJS.disableWorker = true;
+	ACROFORM('test.pdf', 'target');
+  </script>
+</body>
+</html>
