@@ -1,0 +1,23 @@
+input[type="radio"][ value="True"]:checked:before {
+    content: "";
+    display: block;
+    position: relative;
+    top: 5px;
+    left: 6px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #0F0;
+}
+
+input[type="radio"][ value="False"]:checked:before {
+    content: "";
+    display: block;
+    position: relative;
+    top: 5px;
+    left: 6px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #F00;
+}
