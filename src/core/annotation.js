@@ -537,6 +537,44 @@ var WidgetAnnotation = (function WidgetAnnotationClosure() {
       ref = parentRef;
     }
     data.fullName = fieldName.join('.');
+
+    // parse actions
+    var action = dict.get('A');
+    if (action) {
+      var s = action.get('S');
+      if (s && s.name) {
+        data.actionType = s.name;
+      }
+      var f = action.get('F');
+      if (f) {
+        data.actionFile = f;
+      }
+      f = action.get('Flags');
+      if (f) {
+        data.actionFlags = f;
+      }
+    }
+
+    // parse apperance
+    var apperance = dict.get('AP');
+    if (apperance) {
+      data.apperanceNormal = apperance.get('N') || '';
+      data.apperanceOver = apperance.get('R') || data.apperanceNormal;
+      data.apperanceDown = apperance.get('D') || data.apperanceNormal;
+    }
+
+    // set up buttons
+    if (data.fieldType === 'Btn') {
+      if (data.fieldFlags & 32768) { // radio button
+      }
+      else if (data.fieldFlags & 65536) { // push button
+        var mk = dict.get('MK');
+        data.buttonCaption = stringToPDFString(mk.get('CA') || '');
+      }
+      else {  // check box
+      }
+    }
+
   }
 
   var parent = Annotation.prototype;
@@ -646,7 +684,7 @@ var LinkAnnotation = (function LinkAnnotationClosure() {
         if (!isValidUrl(url, false)) {
           url = '';
         }
-        // According to ISO 32000-1:2008, section 12.6.4.7, 
+        // According to ISO 32000-1:2008, section 12.6.4.7,
         // URI should to be encoded in 7-bit ASCII.
         // Some bad PDFs may have URIs in UTF-8 encoding, see Bugzilla 1122280.
         try {
